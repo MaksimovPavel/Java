@@ -1,0 +1,59 @@
+//Напишите программу, записывающую 100 раз слово ”ТЕST” в файл. Слова должны чередоваться по формату
+//– четная итерация большими буквами, нечетные – маленькими
+/* 
+import java.io.FileWriter;
+import java.util.logging.Logger;
+
+public class HW2 {
+    public static void main(String[] args) {
+        Logger l = Logger.getAnonymousLogger();
+        String str = "";
+        for (int i = 0; i < 100; i++) {
+            if(i % 2 != 0 ){
+                str += "test";}
+            else{
+                str += "TEST";
+            }          
+    }
+    try(FileWriter wr = new FileWriter("homework.txt", true)){
+        wr.write(str);
+        wr.flush();
+    } catch (Exception ex){
+        l.warning(ex.getMessage());
+    }
+}
+}
+*/
+//Задание 2
+//Напишите программу, которая считает, распарсит и выведет в логгер заранее созданный файл с именами,
+// предметами и оценками студентов
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.util.logging.Logger;
+
+public class HW2 {
+    public static void main(String[] args) {
+        String fileName = "table.txt";
+        System.out.println(read(fileName));
+    }
+
+    private static String read(String fileName){
+        Logger foo = Logger.getAnonymousLogger();
+        try {
+            File file = new File(fileName);
+            BufferedReader br = new BufferedReader(new FileReader(file));
+            String line;
+            while ((line = br.readLine()) != null) {
+                String[] parts = line.split(" ");
+                System.out.printf("Ученик %s получил сегодня %d\n",parts[0],Integer.parseInt(parts[1]));
+            }
+            br.close();
+            foo.info("we try to read the file");    
+            }
+        catch (Exception e) {
+            foo.info("catch exception while save file");
+        }
+        return "Ok";
+    }
+}
